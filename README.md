@@ -91,7 +91,6 @@ function count(x: number | number[], y: number | number[]): number | number[] {
 
 > 大大减少重复性属性的编写 获得更简洁更好维护的代码
 
-
 **权限**
 
 1. private（私有）
@@ -113,3 +112,53 @@ export class DateUtils {
 
 宗旨个人感觉就是利用各项技术来使我们写代码 维护代码 更好 到达一个更高的层次
 
+## any、unknown、类型断言
+
+**any 和 unknown**
+
+共同点：都是万能类型
+
+不同点：
+
+    1. any 跳过了类型检查
+    2. unknown 保留了类型检查
+
+**类型断言**
+
+> 将一个已知的类型转变为另一个类型
+
+第一种场景：遇到`params: unknown`时 如果其中使用函数 比如`params.forEach()` 是会报错
+为什么会报错？ 虽然`unknown`是一个万能类型 但是`forEach`是数组才会有的方法
+所以`unknown`结合类型断言 可以在描述任意类型的同时 保证其类型安全
+
+```ts
+function myFuncAssest(params: unknown) {
+  // 第一步 断言成 unknown数组类型
+  (params as unknown[]).forEach((item) => {
+    // 第二步 断言成 number 类型
+    item = (item as number) + 1;
+  });
+}
+```
+
+第二种场景：某些时候 TypeScript 的类型分析会显得不那么符合直觉
+如果直接 `const { yourname, job = {} } = iUser;const { title } = job;` 会报错 因为`ts`默认了`job`是一个空对象
+所以次数也结合了类型断言的方式来进行调整 即`const { yourname, job = {} as IJob } = iUser;`
+
+```ts
+interface IUser {
+  yourname: string;
+  job: IJob;
+}
+
+interface IJob {
+  title: string;
+}
+
+const iUser: IUser = {
+  yourname: "lll",
+  job: {
+    title: "job名称",
+  },
+};
+```
