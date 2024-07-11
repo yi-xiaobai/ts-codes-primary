@@ -80,3 +80,36 @@ function count(x: number | number[], y: number | number[]): number | number[] {
   return 1;
 }
 ```
+
+## ts 中的 Class
+
+**类的好处之一：封装性**
+
+> 将与该类相关联的数据都放入到一个类中 增加了类的可维护性 也很一目了然 很清晰
+
+**类的好处之一：继承**
+
+> 大大减少重复性属性的编写 获得更简洁更好维护的代码
+
+
+**权限**
+
+1. private（私有）
+2. public （公有）
+
+权限问题：不想给外界暴露出来的用`private` 反之则用`public`
+
+**命名空间**
+
+> 一批功能类似的方法都放到一个类中
+
+```ts
+export class DateUtils {
+  // static：静态成员 不是实例上的属性 直接通过类来访问方法
+  static isSameDate() {}
+  static diffDate() {}
+}
+```
+
+宗旨个人感觉就是利用各项技术来使我们写代码 维护代码 更好 到达一个更高的层次
+
