@@ -145,7 +145,7 @@ function myFuncAssest(params: unknown) {
 
 第二种场景：某些时候 TypeScript 的类型分析会显得不那么符合直觉
 
-如果直接 `const { yourname, job = {} } = iUser;const { title } = job;` 会报错 
+如果直接 `const { yourname, job = {} } = iUser;const { title } = job;` 会报错
 
 因为`ts`默认了`job`是一个空对象
 
@@ -206,3 +206,49 @@ const iUser: IUser = {
 > 个人理解为 与 逻辑
 
 同时满足其中所有类型成员的类型
+
+## 泛型和类型别名、函数
+
+**泛型**
+
+> 类型的变量
+
+以前自己开发的时候 直接相当于把类型写死了 固定住了 比如
+
+`const str:string = 'yy'` or `const b:boolean = true`
+
+或者**联合类型** `type s1 = string | number`
+
+其实个人理解都是把类型定死了 比如
+
+`s1`相当于只能是`string`类型或者`number`类型
+
+**泛型和类型别名**
+
+> 真是相当于把类型别名变成了“函数”
+
+`type CompleteStatus<T> = string | number | T;`
+
+` CompleteStatus<T>`理解为一个“函数” `T`就是函数的入参
+
+当然了`string | number | T` 就是其返回值 也是一个联合类型 但是
+
+跟上面写的不同 这是动态变化的 你不知道`T`到底是什么 会传什么 很灵活
+
+**泛型和函数**
+
+> 自动推导入参和返回值的类型
+
+```ts
+function factory<T>(input: T): T {
+  return input;
+}
+```
+
+其中 入参和返回值的实际类型进行了关联 实现了类型保护
+
+`factory<T>` T 是什么类型 后面的入参和返回值就是什么类型
+
+这也是泛型带给开发者的能力 不需要我们显式的去定义 入参的类型 返回值的类型 
+
+一个变量`T`搞定
